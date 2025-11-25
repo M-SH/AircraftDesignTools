@@ -1,0 +1,11 @@
+{
+  "MyTurboProp9000": {
+    "mtow_kg": 19000,
+    "seat_count": 50,
+    "cruise_speed_kts": 300,
+    "sfc_lb_hp_hr": 0.47,
+    "installed_power_hp": 2400,
+    "engine_count": 2,
+    "list_price_musd": 21
+  }
+}
