@@ -134,7 +134,7 @@ class ISAtmosphere:
         plt.grid(True)
         plt.show()
 
-    def plot_pressure_ratio(self):
+    def plot_pressure(self):
         plt.figure()
         plt.plot(self.get_pressure(self.altitudes), self.altitudes)
         plt.ylabel("Altitude [m]")
@@ -143,7 +143,7 @@ class ISAtmosphere:
         plt.grid(True)
         plt.show()
 
-    def plot_density_ratio(self):
+    def plot_density(self):
         plt.figure()
         plt.plot(self.get_density(self.altitudes), self.altitudes)
         plt.ylabel("Altitude [m]")
@@ -162,12 +162,9 @@ class ISAtmosphere:
         plt.show()
 
 
-# ------------------------------
-# Example usage (after filling tables)
-# ------------------------------
 if __name__ == "__main__":
     atm = ISAtmosphere()
     atm.plot_temperature()
-    atm.plot_pressure_ratio()
-    atm.plot_density_ratio()
+    atm.plot_pressure()
+    atm.plot_density()
     atm.plot_speed_of_sound()

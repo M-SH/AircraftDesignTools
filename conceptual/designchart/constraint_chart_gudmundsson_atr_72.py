@@ -402,8 +402,7 @@ plt.plot(WS_ATR_kgm2, TW_ATR_guess, 'o', label='ATR-72 approx point')
 
 plt.xlabel('Wing loading W/S (kg/m^2)')
 plt.ylabel('Thrust-to-weight ratio T/W')
-plt.title('Constraint Diagram with Balanced-Field Takeoff and OEI Climb Constraints
-(ATR-72-600 defaults)')
+plt.title('Constraint Diagram with Balanced-Field Takeoff and OEI Climb Constraints (ATR-72-600 defaults)')
 plt.grid(True)
 plt.xlim(WS_kgm2.min(), WS_kgm2.max())
 plt.ylim(0, 1.0)
@@ -417,17 +416,14 @@ plt.show()
 print('Refined constraint chart generated — updated script includes:')
 print(' - Balanced-field takeoff approximation (accelerate-stop / accelerate-go).')
 print(' - One-engine-inoperative (OEI) climb constraint using a representative CS-25 style climb gradient requirement (2.4% by default).')
-print('
-Environment and runway parameters used:')
+print('Environment and runway parameters used:')
 for k, v in env.items():
     print(f'  {k}: {v}')
 
-print('
-Key assumptions / limitations:')
+print('Key assumptions / limitations:')
 print(' - The balanced-field model is a conceptual kinematic integrator (not a certification-level BFL solver).')
 print(' - Thrust is approximated proportional to weight (T/W), with a simplified speed-lapse model. Engine-out thrust is modeled as (n-1)/n of total.')
 print(' - Braking deceleration is approximated via a rolling friction coefficient and aerodynamic braking; anti-skid/brake energy limits are neglected.')
-print('
-If you want:')
+print('If you want:')
 print(' - I can calibrate the BFL model against a published BFL for ATR-72 by tuning mu, climb_factor and thrust lapse.')
 print(' - I can add runway altitude/temperature sensitivity plots, show V1 contours, or include OEI asymmetric rolling moment checks (nose wheel steering and directional control).')

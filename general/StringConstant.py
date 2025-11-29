@@ -1,0 +1,2 @@
+class StringConstant:
+    UNDERSCORE = "_"
