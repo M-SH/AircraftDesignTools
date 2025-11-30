@@ -2,7 +2,10 @@ import numpy as np
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 
-class ISAtmosphere:
+from general.Singleton import Singleton
+
+
+class ISAtmosphere(metaclass=Singleton):
     p0 = 101300  # Pa
     rho0 = 1.225  # kg/m^3
     mu0 = 1.789 * pow(10, -5)  # kg/m/s
