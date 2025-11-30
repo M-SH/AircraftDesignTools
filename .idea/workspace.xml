@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43e9218a-0ec5-41cc-afb9-ed72f64bc125" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cost/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/dashboard.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/doc_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/readme_figure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cost/sample_aircraft.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AircraftDesign.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AircraftDesign.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cost/doc_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/cost/doc_engine.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +41,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/micha/dev/AircraftDesign"
+    "last_opened_file_path": "C:/Users/micha/dev/AircraftDesignTools"
   }
 }]]></component>
   <component name="RunManager" selected="Python.dashboard">

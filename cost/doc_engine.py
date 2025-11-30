@@ -6,19 +6,19 @@ from datetime import datetime
 # Global dictionary storing aircraft characteristics
 AIRCRAFT = {
     "ATR72-600": {
-        "mtow_kg": 23000, "seat_count": 70,
+        "mtow_kg": 23000, "seat_count": 70, "pilot_count": 2, "crew_count": 2,
         "cruise_speed_kts": 275,
         "sfc_lb_hp_hr": 0.50, "installed_power_hp": 2750 * 2,
         "engine_count": 2, "list_price_musd": 26,
     },
     "Q400": {
-        "mtow_kg": 29260, "seat_count": 78,
+        "mtow_kg": 29260, "seat_count": 78, "pilot_count": 2, "crew_count": 2,
         "cruise_speed_kts": 360,
         "sfc_lb_hp_hr": 0.52, "installed_power_hp": 5071 * 2,
         "engine_count": 2, "list_price_musd": 34,
     },
     "E175": {
-        "mtow_kg": 37200, "seat_count": 76,
+        "mtow_kg": 37200, "seat_count": 76, "pilot_count": 2, "crew_count": 2,
         "cruise_speed_kts": 445,
         "sfc_lb_lbf_hr": 0.65, "installed_thrust_lbf": 14200 * 2,
         "engine_count": 2, "list_price_musd": 48,
@@ -27,6 +27,8 @@ AIRCRAFT = {
 
 DEFAULT_FUEL_PRICE = 0.80
 
+DEFAULT_PILOT_HOURLYRATE = 180
+DEFAULT_CREW_HOURLYRATE = 120
 
 # ===============================================================
 # LOAD CUSTOM AIRCRAFT FROM JSON
@@ -88,8 +90,8 @@ def fuel_burn_segmented(ac, mission_nm, fuel_price=DEFAULT_FUEL_PRICE):
 def maintenance_cost(ac, hours):
     return hours * (0.0009 * ac["mtow_kg"] + 75 * ac["engine_count"])
 
-def crew_cost(hours):
-    return 450 * hours
+def crew_cost(ac, hours):
+    return (ac.pilot_count * DEFAULT_PILOT_HOURLYRATE + ac.crew_count * DEFAULT_CREW_HOURLYRATE) * hours
 
 def nav_airport_cost(ac):
     mtow = ac["mtow_kg"]
@@ -112,7 +114,7 @@ def compute_doc(ac_name, mission_nm, fuel_price=DEFAULT_FUEL_PRICE, avg_fare=120
 
     fuel_cost, fuel_kg = fuel_burn_segmented(ac, mission_nm, fuel_price)
     maint = maintenance_cost(ac, block_hours)
-    crew = crew_cost(block_hours)
+    crew = crew_cost(ac, block_hours)
     nav, apt = nav_airport_cost(ac)
     own = ownership_cost(ac, block_hours)
 
