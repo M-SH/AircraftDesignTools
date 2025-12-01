@@ -6,9 +6,9 @@ from matplotlib import pyplot as plt
 from conceptual.AircraftPerformance import AircraftPerformance
 from conceptual.empiric.Gudmundsson import Gudmundsson
 from conceptual.empiric.Raymer import Raymer
+from general.Airspeeds import Airspeeds
 from general.Convert import Convert
 from general.ISAtmosphere import ISAtmosphere
-from general.Physics import Physics
 from model.aircraft.Aircraft import Aircraft
 
 if __name__ == "__main__":
@@ -25,6 +25,7 @@ if __name__ == "__main__":
     cessna162.ground_run_distance = 640 #ft
     cessna162.roc = 14.67 #ft/s
     cessna162.v_cruise = 108 #knots
+    cessna162.service_ceiling = 17000 #ft
 
     e = Raymer.calc_oswald_factor(cessna162.ar)
 
@@ -52,11 +53,23 @@ if __name__ == "__main__":
 
     t_w_cruise = AircraftPerformance.cruise_imp(W_S, cessna162.c_d_min, k, v_cruise, rho_slugs_per_ft)
 
+    rho_service_ = ISAtmosphere().get_density(Convert().convert(cessna162.service_ceiling, Convert.FOOT, Convert.METER))
+    rho_service_ceiling_imp = Convert().convert(Convert().convert(rho, Convert.KG, Convert.SLUG), Convert.METER, Convert.FOOT, -3)
+    v_upsilon = Gudmundsson.calc_best_roc_speed_single_engine_cas(W_S)
+    v_upsilon = Convert().convert(v_upsilon, Convert.KNOT, Convert.FT_PER_S)
+
+    # convert to true airspeed at service ceiling altitude
+    sigma = ISAtmosphere().get_density_ratio(Convert().convert(cessna162.service_ceiling, Convert.FOOT, Convert.METER))
+    v_upsilon_service_ceiling = Airspeeds.to_ktas(Airspeeds.to_keas(v_upsilon)) # TODO
+
+    t_w_service_ceiling = AircraftPerformance.service_ceiling_imp(W_S, cessna162.c_d_min, k, v_upsilon, rho_service_ceiling_imp)
+
     # plt.plot(WS_ATR_kgm2, TW_ATR_guess, 'o', label='ATR-72 approx point')
     plt.plot(W_S, t_w_roll_distance, label='Ground Roll Distance Take-off ')
     plt.plot(W_S, t_w_roc_sealevel, label='Rate of Climb Take-off')
     plt.plot(W_S, t_w_constant_velocity_turn, label='Constant Velocity Turn Cruise')
     plt.plot(W_S, t_w_cruise, label='Cruise')
+    plt.plot(W_S, t_w_service_ceiling, label='Service Ceiling')
 
 
     plt.xlabel('Wing loading W/S (kg/m^2)')

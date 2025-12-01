@@ -55,3 +55,7 @@ class AircraftPerformance:
         thrust_to_weight = q * c_d_min * (1 / wing_loading) + k * (1 / q) * wing_loading
 
         return thrust_to_weight
+
+    @staticmethod
+    def service_ceiling_imp(wing_loading: float | ndarray, c_d_min: float, k: float, v_upsilon: float, rho: float) -> float | ndarray:
+        return AircraftPerformance.rate_of_climb_imp(wing_loading, 1.667, c_d_min, k, v_upsilon, rho)
