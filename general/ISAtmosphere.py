@@ -107,22 +107,31 @@ class ISAtmosphere(metaclass=Singleton):
         self.kinematic_viscosity_ratio_fn = interp1d(self.altitudes, self.kinematic_viscosity_ratio)
         self.speed_of_sound_fn = interp1d(self.altitudes, self.speed_of_sound)
 
-    def get_temperature(self, altitude_m):
+    def get_temperature_ratio(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
+        return self.temperature_fn(altitude_m) / self.temperature_fn(0.0)
+
+    def get_temperature(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
         return self.temperature_fn(altitude_m)
 
-    def get_pressure(self, altitude_m):
-        return self.pressure_ratio_fn(altitude_m) * self.p0
+    def get_pressure_ratio(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
+        return self.pressure_ratio_fn(altitude_m)
 
-    def get_density(self, altitude_m):
-        return self.density_ratio_fn(altitude_m) * self.rho0
+    def get_pressure(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
+        return self.get_pressure_ratio(altitude_m) * self.p0
 
-    def get_viscosity(self, altitude_m):
+    def get_density_ratio(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
+        return self.density_ratio_fn(altitude_m)
+
+    def get_density(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
+        return self.get_density_ratio(altitude_m) * self.rho0
+
+    def get_viscosity(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
         return self.viscosity_ratio_fn(altitude_m) * self.mu0
 
-    def get_kinematic_viscosity(self, altitude_m):
+    def get_kinematic_viscosity(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
         return self.kinematic_viscosity_ratio_fn(altitude_m) * self.nu0
 
-    def get_speed_of_sound(self, altitude_m):
+    def get_speed_of_sound(self, altitude_m: float | np.ndarray) -> float | np.ndarray:
         return self.speed_of_sound_fn(altitude_m)
 
     # ------------------------------
