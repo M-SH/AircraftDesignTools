@@ -22,6 +22,8 @@ if __name__ == "__main__":
     cessna162.cl_max = 1.756
     cessna162.cl_to = 0.5
     cessna162.cd_to = 0.038
+    cessna162.cl_ldg = 0.5
+    cessna162.cd_ldg = 0.07
     cessna162.ground_run_distance = 640 #ft
     cessna162.roc = 14.67 #ft/s
     cessna162.v_cruise = 108 #knots
@@ -34,13 +36,13 @@ if __name__ == "__main__":
 
     airport_mu = 0.04 # ground friction constant
     airport_rho_imp = Convert().convert(Convert().convert(ISAtmosphere.rho0, Convert.KG, Convert.SLUG), Convert.METER, Convert.FOOT, -3)
+    airport_altitude_m = 0.0
 
     t_w_roll_distance = AircraftPerformance.takeoff_ground_run_distance_imp(W_S, cessna162.ground_run_distance, cessna162.cl_to, cessna162.cl_max, cessna162.cd_to, airport_rho_imp, airport_mu)
 
-    v_upsilon = Gudmundsson.calc_best_roc_speed_single_engine_cas(W_S)
-    v_upsilon = Convert().convert(v_upsilon, Convert.KNOT, Convert.FT_PER_S)
+    v_upsilon_kcas = Gudmundsson.calc_best_roc_speed_single_engine_cas(W_S)
 
-    t_w_roc_sealevel = AircraftPerformance.rate_of_climb_imp(W_S, cessna162.roc, cessna162.c_d_min, k, v_upsilon, airport_rho_imp)
+    t_w_roc_sealevel = AircraftPerformance.rate_of_climb_imp(10, cessna162.roc, cessna162.c_d_min, k, v_upsilon_kcas, airport_altitude_m)
 
     cruise_altitude_ft = 8000
     n = 1.155 # 30 degrees bank angle
@@ -53,16 +55,14 @@ if __name__ == "__main__":
 
     t_w_cruise = AircraftPerformance.cruise_imp(W_S, cessna162.c_d_min, k, v_cruise, rho_slugs_per_ft)
 
-    rho_service_ = ISAtmosphere().get_density(Convert().convert(cessna162.service_ceiling, Convert.FOOT, Convert.METER))
-    rho_service_ceiling_imp = Convert().convert(Convert().convert(rho, Convert.KG, Convert.SLUG), Convert.METER, Convert.FOOT, -3)
-    v_upsilon = Gudmundsson.calc_best_roc_speed_single_engine_cas(W_S)
-    v_upsilon = Convert().convert(v_upsilon, Convert.KNOT, Convert.FT_PER_S)
+    # Service Ceiling Constraint
+    service_ceiling_m = Convert().convert(cessna162.service_ceiling, Convert.FOOT, Convert.METER)
+    v_upsilon_kcas = Gudmundsson.calc_best_roc_speed_single_engine_cas(W_S)
 
-    # convert to true airspeed at service ceiling altitude
-    sigma = ISAtmosphere().get_density_ratio(Convert().convert(cessna162.service_ceiling, Convert.FOOT, Convert.METER))
-    v_upsilon_service_ceiling = Airspeeds.to_ktas(Airspeeds.to_keas(v_upsilon)) # TODO
+    t_w_service_ceiling = AircraftPerformance.service_ceiling_imp(W_S, cessna162.c_d_min, k, v_upsilon_kcas, service_ceiling_m)
 
-    t_w_service_ceiling = AircraftPerformance.service_ceiling_imp(W_S, cessna162.c_d_min, k, v_upsilon, rho_service_ceiling_imp)
+    w_s_landing = AircraftPerformance.landing_distance_imp(1369, 0.0, 2.029, cessna162.cl_ldg, cessna162.cd_ldg, h_obst_ft=50)
+
 
     # plt.plot(WS_ATR_kgm2, TW_ATR_guess, 'o', label='ATR-72 approx point')
     plt.plot(W_S, t_w_roll_distance, label='Ground Roll Distance Take-off ')
