@@ -12,10 +12,10 @@ class Assembly(ABC):
         self.parent_system = None
         self.sub_systems = []
 
-    def set_position_m(self, x: float, y: float, z: float):
+    def set_position_m(self, x: float, y: float, z: float = 0.0):
         self.position_relative_m = np.array([x, y, z])
 
-    def set_rotation_deg(self, rot_x: float, rot_y: float, rot_z: float):
+    def set_rotation_deg(self, rot_x: float, rot_y: float, rot_z: float = 0.0):
         self.position_relative_m = np.array([rot_x, rot_y, rot_z])
 
     def get_absolute_position_m(self) -> np.array:

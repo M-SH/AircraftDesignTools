@@ -8,6 +8,7 @@ from general.StringConstant import StringConstant
 class Convert(metaclass=Singleton):
     METER = "m"
     FOOT = "ft"
+    INCH = "inch"
 
     KG = "kg"
     POUND = "lbf"
@@ -18,6 +19,7 @@ class Convert(metaclass=Singleton):
     M_PER_S = "m_per_s"
 
     METER_TO_FEET = 3.281
+    METER_TO_INCH = 39.37
     KG_TO_POUND = 2.20462
     KG_TO_SLUG = 0.0685218
     KTS_TO_FT_PER_S = 1.68781
@@ -27,6 +29,8 @@ class Convert(metaclass=Singleton):
         self.conversion_dict = dict[str, float]()
         self.conversion_dict[Convert._create_key(Convert.METER, Convert.FOOT)] = Convert.METER_TO_FEET
         self.conversion_dict[Convert._create_key(Convert.FOOT, Convert.METER)] = 1.0 / Convert.METER_TO_FEET
+        self.conversion_dict[Convert._create_key(Convert.METER, Convert.INCH)] = Convert.METER_TO_INCH
+        self.conversion_dict[Convert._create_key(Convert.INCH, Convert.METER)] = 1.0 / Convert.METER_TO_INCH
         self.conversion_dict[Convert._create_key(Convert.KG, Convert.POUND)] = Convert.KG_TO_POUND
         self.conversion_dict[Convert._create_key(Convert.POUND, Convert.KG)] = 1.0 / Convert.KG_TO_POUND
         self.conversion_dict[Convert._create_key(Convert.KG, Convert.SLUG)] = Convert.KG_TO_SLUG
